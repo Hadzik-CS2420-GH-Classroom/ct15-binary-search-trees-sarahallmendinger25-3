@@ -148,19 +148,10 @@ bool BinarySearchTree::search_(Node* node, int value) const {
     //   - If value == node->data, return true (found!)
     //   - If value < node->data, recurse left and return the result
     //   - Otherwise, recurse right and return the result
-    if (!node) {
-        return false;
-	}
-    if (value == node->data) {
-        return true;
-    } else if (value < node->data) {
-        return search_(node->left, value);
-    } else {
-        return search_(node->right, value);
-	}
-
-
-    return false;
+    if (!node) return false;
+    if (value == node->data) return true;
+    if (value < node->data) return search_(node->left, value);
+    return search_(node->right, value);
 }
 
 // =============================================================================
@@ -195,15 +186,10 @@ void BinarySearchTree::inorder_(Node* node) const {
     //   - Recurse on node->left
     //   - Print node->data followed by a space
     //   - Recurse on node->right
-    if (!node) {
-        return;
-    }
-	// Recurse left
-	node = node->left;
-	// Print current node
-	std::cout << node->data << " ";
-    //recurse right
-	node = node->right;
+    if (!node) return;
+    inorder_(node->left);
+    std::cout << node->data << " ";
+    inorder_(node->right);
 }
 
 // ---------------------------------------------------------------------------
@@ -231,11 +217,9 @@ void BinarySearchTree::preorder_(Node* node) const {
     if (!node) {
         return;
 	}
-	std::cout << node->data << " ";
-	// Recurse left
-	node = node->left;
-	// Recurse right
-	node = node->right;
+ std::cout << node->data << " ";
+    preorder_(node->left);
+    preorder_(node->right);
 
 }
 
@@ -263,9 +247,9 @@ void BinarySearchTree::postorder_(Node* node) const {
     if (!node) {
         return;
     }
-	node = node->left;
-	node = node->right;
-	std::cout << node->data << " ";
+    postorder_(node->left);
+    postorder_(node->right);
+    std::cout << node->data << " ";
 
 }
 
@@ -306,11 +290,9 @@ int BinarySearchTree::height_(Node* node) const {
     if (!node) {
         return -1;
 	}
-	height_(node->left);
-	height_(node->right);
-	return 1 + std::max(height_(node->left), height_(node->right));
-
-    return -1;
+    int lh = height_(node->left);
+    int rh = height_(node->right);
+    return 1 + std::max(lh, rh);
 }
 
 // =============================================================================
